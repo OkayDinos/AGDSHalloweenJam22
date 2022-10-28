@@ -10,13 +10,35 @@ public class Wires : MonoBehaviour
 
     public List<GameObject> wirePoints = new List<GameObject>();
 
+    List<bool> wireCompleted = new List<bool>();
+
+    public List<GameObject> wireEndPoints = new List<GameObject>();
+
+    public AnimationCurve pulseCurve;
+
+    public AnimationCurve textCurve;
+
+    public AnimationCurve endCurve;
+
+    [SerializeField] GameObject winText;
+
+    private List<EasyTween> created = new List<EasyTween>();
+
     [SerializeField] GameObject wirePrefab;
 
     [SerializeField] Canvas canvas;
 
+    GameObject scene;
+
     List<GameObject> wires = new List<GameObject>();
     GameObject currentWire;
-    Vector3 startPoint;
+    Vector3 startPos;
+
+    bool completed;
+
+    bool ended;
+
+    GameObject currentWirePoint;
 
     bool holding;
 
@@ -24,6 +46,17 @@ public class Wires : MonoBehaviour
     void Start()
     {
         holdAction.Enable();
+
+        for (int i = 0; i < wirePoints.Count; i++)
+        {
+            wireCompleted.Add(false);
+        }
+
+        completed = false;
+
+        ended = false;
+
+        scene = canvas.transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -40,33 +73,26 @@ public class Wires : MonoBehaviour
 
                 foreach (GameObject wirePoint in wirePoints)
                 {
-                    if (Vector3.Distance(mousePos, wirePoint.transform.position) < 25f)
+                    if (Vector3.Distance(mousePos, wirePoint.transform.position) < 25f && !wireCompleted[wirePoints.IndexOf(wirePoint)])
                     {
-                        startPoint = mousePos;
                         currentWire = Instantiate(wirePrefab, canvas.transform);
-                        currentWire.transform.SetParent(canvas.transform);
+                        currentWire.transform.SetParent(scene.transform);
                         wires.Add(currentWire);
+                        currentWire.GetComponent<Image>().color = wirePoint.GetComponent<Image>().color - new Color(0.1f, 0.1f, 0.1f, 0f);
+                        currentWirePoint = wirePoint;
+                        startPos = currentWirePoint.transform.position;
                         break;
                     }
                 }
-                
-                // GameObject wire = Instantiate(wirePrefab, transform.position, Quaternion.identity);
-                // wires.Add(wire);
-
-                // wire.transform.SetParent(canvas.transform);
-
-                // currentWire = wire;
-
-                // startPoint = Mouse.current.position.ReadValue();
             }
 
             if (currentWire != null)
             {
-                currentWire.GetComponent<RectTransform>().position = Vector3.Lerp(Mouse.current.position.ReadValue(), startPoint, 0.5f);
+                currentWire.GetComponent<RectTransform>().position = Vector3.Lerp(Mouse.current.position.ReadValue(), startPos, 0.5f);
 
-                currentWire.GetComponent<RectTransform>().sizeDelta = new Vector2(Vector3.Distance(Mouse.current.position.ReadValue(), startPoint), 10);
+                currentWire.GetComponent<RectTransform>().sizeDelta = new Vector2(Vector3.Distance(Mouse.current.position.ReadValue(), startPos), 20);
 
-                currentWire.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, Mathf.Atan2(Mouse.current.position.ReadValue().y - startPoint.y, Mouse.current.position.ReadValue().x - startPoint.x) * Mathf.Rad2Deg);
+                currentWire.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, Mathf.Atan2(Mouse.current.position.ReadValue().y - startPos.y, Mouse.current.position.ReadValue().x - startPos.x) * Mathf.Rad2Deg);
             }
 
         }
@@ -76,8 +102,91 @@ public class Wires : MonoBehaviour
             {
                 holding = false;
 
+                Vector3 mousePos = Mouse.current.position.ReadValue();
+                mousePos.z = 5;
+
+                bool connected = false;
+
+                foreach (GameObject wirePoint in wireEndPoints)
+                {
+                    if (Vector3.Distance(mousePos, wirePoint.transform.position) < 25f && wirePoint.GetComponent<Image>().color == currentWirePoint.GetComponent<Image>().color)
+                    {
+                        currentWire.GetComponent<RectTransform>().position = Vector3.Lerp(wirePoint.transform.position, startPos, 0.5f);
+
+                        currentWire.GetComponent<RectTransform>().sizeDelta = new Vector2(Vector3.Distance(wirePoint.transform.position, startPos), 20);
+
+                        currentWire.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, Mathf.Atan2(wirePoint.transform.position.y - startPos.y, wirePoint.transform.position.x - startPos.x) * Mathf.Rad2Deg);
+
+                        connected = true;
+
+                        wireCompleted[wirePoints.IndexOf(currentWirePoint)] = true;
+
+                        EasyTween tween = currentWire.AddComponent<EasyTween>();
+
+                        currentWire.GetComponent<EasyTween>().rectTransform = currentWire.GetComponent<RectTransform>();
+
+                        created.Add(tween);
+
+                        tween.SetAnimationScale(new Vector3(.98f, .85f, 1f), new Vector3(1f, 1.0f, 1f), pulseCurve, pulseCurve);
+
+                        tween.SetAnimatioDuration(0.25f);
+
+                        tween.OpenCloseObjectAnimation();
+
+                        currentWire = null;
+
+                        currentWirePoint = null;
+
+                        break;
+                    }
+                }
+
+                if (completed && !ended)
+                {
+                    EasyTween tween = winText.GetComponent<EasyTween>();
+
+                    tween.SetAnimationPosition(new Vector3(0, -1000, 20), new Vector3(0, 0, 20), endCurve, endCurve);
+
+                    tween.SetAnimatioDuration(0.7f);
+
+                    tween.OpenCloseObjectAnimation();
+
+
+
+                    EasyTween tween2 = scene.AddComponent<EasyTween>();
+
+                    scene.GetComponent<EasyTween>().rectTransform = scene.GetComponent<RectTransform>();
+
+                    created.Add(tween2);
+
+                    tween2.SetAnimationPosition(new Vector3(0, 0, 20), new Vector3(0, -1000, 20), endCurve, endCurve);
+
+                    tween2.SetAnimatioDuration(0.7f);
+
+                    tween2.OpenCloseObjectAnimation();
+
+                    ended = true;
+                }
+
+                if (!wireCompleted.Contains(false) && !completed)
+                {
+                    EasyTween tween = winText.AddComponent<EasyTween>();
+
+                    winText.GetComponent<EasyTween>().rectTransform = winText.GetComponent<RectTransform>();
+
+                    created.Add(tween);
+
+                    tween.SetAnimationPosition(new Vector3(0, -400, 20), new Vector3(0, 0, 20), textCurve, textCurve);
+
+                    tween.SetAnimatioDuration(0.8f);
+
+                    tween.OpenCloseObjectAnimation();
+
+                    completed = true;
+                }
+                
                 // Destroy wire
-                if (currentWire != null)
+                if (currentWire != null && connected == false)
                 {
                     Destroy(currentWire);
                 }
