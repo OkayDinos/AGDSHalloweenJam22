@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Wires : MonoBehaviour
 {
+    public static Wires instance;
+
     public InputAction holdAction;
 
     public InputAction optionsButton;
@@ -44,13 +46,19 @@ public class Wires : MonoBehaviour
 
     bool holding;
 
+    void Awake()
+    {
+        if (Wires.instance)
+            Destroy(this);
+        else
+            Wires.instance = this;
+
+        holdAction.Enable();
+        optionsButton.Enable();
+    }
     // Start is called before the first frame update
     void Start()
     {
-        holdAction.Enable();
-
-        optionsButton.Enable();
-
         for (int i = 0; i < wirePoints.Count; i++)
         {
             wireCompleted.Add(false);
@@ -61,6 +69,18 @@ public class Wires : MonoBehaviour
         ended = false;
 
         scene = canvas.transform.GetChild(0).gameObject;
+    }
+
+    public void Pause()
+    {
+        holdAction.Disable();
+        optionsButton.Disable();
+    }
+
+    public void Unpause()
+    {
+        holdAction.Enable();
+        optionsButton.Enable();
     }
 
     // Update is called once per frame
