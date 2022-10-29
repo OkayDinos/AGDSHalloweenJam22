@@ -195,6 +195,7 @@ public class Wires : MonoBehaviour
                     tween2.OpenCloseObjectAnimation();
 
                     ended = true;
+                    FuseBox.instance.OnMinigameClosed();
                 }
 
                 if (!wireCompleted.Contains(false) && !completed)
