@@ -48,8 +48,6 @@ public class MainManager : MonoBehaviour
             Volume.master = data.masterVolume;
             Volume.music = data.musicVolume;
             Volume.sfx = data.sfxVolume;
-
-            Debug.Log($"Loaded options data {data.masterVolume}");
         }
         else
         {
@@ -59,8 +57,6 @@ public class MainManager : MonoBehaviour
             data.sfxVolume = 0.5f;
             string json = JsonUtility.ToJson(data);
             File.WriteAllText(Application.persistentDataPath + "/OptionsData.json", json);
-
-            Debug.Log($"Created new options data");
         }
 
         optionsMenuRef = OptionsMenu.instance;

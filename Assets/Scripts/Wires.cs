@@ -107,7 +107,7 @@ public class Wires : MonoBehaviour
                         currentWire = Instantiate(wirePrefab, canvas.transform);
                         currentWire.transform.SetParent(scene.transform);
                         wires.Add(currentWire);
-                        currentWire.GetComponent<Image>().color = wirePoint.GetComponent<Image>().color - new Color(0.1f, 0.1f, 0.1f, 0f);
+                        currentWire.GetComponent<Image>().color = wirePoint.GetComponent<Image>().color - new Color(0.2f, 0.2f, 0.2f, 0f);
                         currentWirePoint = wirePoint;
                         startPos = currentWirePoint.transform.position;
                         break;
@@ -174,7 +174,7 @@ public class Wires : MonoBehaviour
                 {
                     EasyTween tween = winText.GetComponent<EasyTween>();
 
-                    tween.SetAnimationPosition(new Vector3(0, -1000, 20), new Vector3(0, 0, 20), endCurve, endCurve);
+                    tween.SetAnimationPosition(new Vector3(-1800, 0, 20), new Vector3(0, 0, 20), endCurve, endCurve);
 
                     tween.SetAnimatioDuration(0.7f);
 
@@ -188,7 +188,7 @@ public class Wires : MonoBehaviour
 
                     created.Add(tween2);
 
-                    tween2.SetAnimationPosition(new Vector3(0, 0, 20), new Vector3(0, -1000, 20), endCurve, endCurve);
+                    tween2.SetAnimationPosition(new Vector3(0, 0, 20), new Vector3(-1800, 0, 20), endCurve, endCurve);
 
                     tween2.SetAnimatioDuration(0.7f);
 
