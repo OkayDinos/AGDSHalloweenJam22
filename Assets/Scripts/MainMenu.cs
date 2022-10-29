@@ -32,6 +32,6 @@ public class MainMenu : MonoBehaviour
     public void ButtonStartGame()
     {
         MainManager.instance.currentGameState = GameState.InGame;
-        SceneManager.LoadScene("Scenes/WiresMinigame");
+        SceneManager.LoadScene(2);
     }
 }
