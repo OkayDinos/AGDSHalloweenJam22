@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 372028941}
   - component: {fileID: 372028940}
   - component: {fileID: 372028939}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -378,7 +378,7 @@ GameObject:
   - component: {fileID: 1125677505}
   - component: {fileID: 1125677504}
   - component: {fileID: 1125677503}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -475,7 +475,7 @@ GameObject:
   - component: {fileID: 1941923324}
   - component: {fileID: 1941923323}
   - component: {fileID: 1941923326}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -596,7 +596,7 @@ GameObject:
   - component: {fileID: 2068669544}
   - component: {fileID: 2068669543}
   - component: {fileID: 2068669542}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
