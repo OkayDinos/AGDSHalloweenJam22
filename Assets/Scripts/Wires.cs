@@ -73,7 +73,7 @@ public class Wires : MonoBehaviour
 
                 foreach (GameObject wirePoint in wirePoints)
                 {
-                    if (Vector3.Distance(mousePos, wirePoint.transform.position) < 25f && !wireCompleted[wirePoints.IndexOf(wirePoint)])
+                    if (Vector3.Distance(mousePos, wirePoint.transform.position) < 60f && !wireCompleted[wirePoints.IndexOf(wirePoint)])
                     {
                         currentWire = Instantiate(wirePrefab, canvas.transform);
                         currentWire.transform.SetParent(scene.transform);
@@ -90,7 +90,7 @@ public class Wires : MonoBehaviour
             {
                 currentWire.GetComponent<RectTransform>().position = Vector3.Lerp(Mouse.current.position.ReadValue(), startPos, 0.5f);
 
-                currentWire.GetComponent<RectTransform>().sizeDelta = new Vector2(Vector3.Distance(Mouse.current.position.ReadValue(), startPos), 20);
+                currentWire.GetComponent<RectTransform>().sizeDelta = new Vector2(Vector3.Distance(Mouse.current.position.ReadValue(), startPos), 40);
 
                 currentWire.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, Mathf.Atan2(Mouse.current.position.ReadValue().y - startPos.y, Mouse.current.position.ReadValue().x - startPos.x) * Mathf.Rad2Deg);
             }
@@ -109,11 +109,11 @@ public class Wires : MonoBehaviour
 
                 foreach (GameObject wirePoint in wireEndPoints)
                 {
-                    if (Vector3.Distance(mousePos, wirePoint.transform.position) < 25f && wirePoint.GetComponent<Image>().color == currentWirePoint.GetComponent<Image>().color)
+                    if (Vector3.Distance(mousePos, wirePoint.transform.position) < 60f && wirePoint.GetComponent<Image>().color == currentWirePoint.GetComponent<Image>().color)
                     {
                         currentWire.GetComponent<RectTransform>().position = Vector3.Lerp(wirePoint.transform.position, startPos, 0.5f);
 
-                        currentWire.GetComponent<RectTransform>().sizeDelta = new Vector2(Vector3.Distance(wirePoint.transform.position, startPos), 20);
+                        currentWire.GetComponent<RectTransform>().sizeDelta = new Vector2(Vector3.Distance(wirePoint.transform.position, startPos), 40);
 
                         currentWire.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, Mathf.Atan2(wirePoint.transform.position.y - startPos.y, wirePoint.transform.position.x - startPos.x) * Mathf.Rad2Deg);
 
@@ -176,7 +176,7 @@ public class Wires : MonoBehaviour
 
                     created.Add(tween);
 
-                    tween.SetAnimationPosition(new Vector3(0, -400, 20), new Vector3(0, 0, 20), textCurve, textCurve);
+                    tween.SetAnimationPosition(new Vector3(0, -800, 20), new Vector3(0, 0, 20), textCurve, textCurve);
 
                     tween.SetAnimatioDuration(0.8f);
 
