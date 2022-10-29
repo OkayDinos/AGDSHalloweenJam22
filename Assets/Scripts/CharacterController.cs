@@ -16,7 +16,9 @@ namespace OkayDinos.GrimsNightmare
         Vector2 m_move;
 
         Rigidbody m_RB;
-        float m_Speed = 5f;
+        float m_Speed = 11f;
+
+        bool flipped = false;
 
         // Start is called before the first frame update
         void Start()
@@ -62,6 +64,11 @@ namespace OkayDinos.GrimsNightmare
         }
         private void OnTriggerEnter(Collider other)
         {
+            if(other.CompareTag("Ruben"))
+            {
+                GameObject.Destroy(this.gameObject);
+            }
+
             Debug.Log("Press e to pick up");
         }
 
@@ -73,5 +80,6 @@ namespace OkayDinos.GrimsNightmare
             var move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * new Vector3(direction.x, 0, direction.y);
             transform.position += move * scaledMoveSpeed;
         }
+
     }
 }
