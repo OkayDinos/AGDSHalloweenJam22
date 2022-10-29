@@ -39,8 +39,8 @@ ModelImporter:
       name: Shuffling
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 0
-      lastFrame: 450
+      firstFrame: 60
+      lastFrame: 361
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
