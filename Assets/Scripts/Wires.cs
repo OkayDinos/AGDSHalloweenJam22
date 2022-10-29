@@ -83,6 +83,21 @@ public class Wires : MonoBehaviour
         optionsButton.Enable();
     }
 
+    async void End()
+    {
+        float time = 0;
+        float timer = 0.7f;
+
+        while (time < timer)
+        {
+            time += Time.deltaTime;
+
+            await System.Threading.Tasks.Task.Yield();
+        }
+
+        FuseBox.instance.OnMinigameClosed();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -195,7 +210,7 @@ public class Wires : MonoBehaviour
                     tween2.OpenCloseObjectAnimation();
 
                     ended = true;
-                    FuseBox.instance.OnMinigameClosed();
+                    End();
                 }
 
                 if (!wireCompleted.Contains(false) && !completed)
