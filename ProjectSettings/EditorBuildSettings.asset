@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WiresMinigame.unity
     guid: 693205db4cdc3194e909ec3a65c81716
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 40a853222a1d22648b9102688c705575
   m_configObjects: {}

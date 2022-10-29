@@ -34,4 +34,9 @@ public class MainMenu : MonoBehaviour
         MainManager.instance.currentGameState = GameState.InGame;
         SceneManager.LoadScene(2);
     }
+
+    public void ButtonOpenCredits()
+    {
+        SceneManager.LoadScene(3);
+    }
 }
