@@ -23,7 +23,6 @@ public class Pickup : Interactables
 
     public override void DoInteract()
     {
-
         GameObject.FindGameObjectWithTag("Player").SendMessage("PickUp", currentType);
         GameObject.Destroy(this.gameObject);
     }

@@ -17,8 +17,8 @@ namespace OkayDinos.GrimsNightmare
 
         Rigidbody m_RB;
         float m_Speed = 5f;
-        bool hasKey = false;
-        bool hasFuse = false;
+        public bool hasKey = false;
+        public bool hasFuse = false;
 
         Interactables m_CurrenInteractable;
 
