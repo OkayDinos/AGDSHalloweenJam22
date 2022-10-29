@@ -1070,6 +1070,31 @@ MonoBehaviour:
       m_Action: Hold
       m_Flags: 0
     m_Flags: 0
+  optionsButton:
+    m_Name: Options Button
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: df52d2cf-764b-43b3-bc56-00215d70f025
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: ab26c37d-f36a-4eee-a0fc-00eba63d1a1a
+      m_Path: <Keyboard>/escape
+      m_Interactions: Press
+      m_Processors: 
+      m_Groups: 
+      m_Action: Options Button
+      m_Flags: 0
+    - m_Name: 
+      m_Id: a2839a36-3325-4dcc-8de3-0163b6abae5f
+      m_Path: <Keyboard>/p
+      m_Interactions: Press
+      m_Processors: 
+      m_Groups: 
+      m_Action: Options Button
+      m_Flags: 0
+    m_Flags: 0
   wirePoints:
   - {fileID: 1458856912}
   - {fileID: 227141530}

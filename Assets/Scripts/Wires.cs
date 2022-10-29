@@ -8,6 +8,8 @@ public class Wires : MonoBehaviour
 {
     public InputAction holdAction;
 
+    public InputAction optionsButton;
+
     public List<GameObject> wirePoints = new List<GameObject>();
 
     List<bool> wireCompleted = new List<bool>();
@@ -47,6 +49,8 @@ public class Wires : MonoBehaviour
     {
         holdAction.Enable();
 
+        optionsButton.Enable();
+
         for (int i = 0; i < wirePoints.Count; i++)
         {
             wireCompleted.Add(false);
@@ -62,6 +66,11 @@ public class Wires : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (optionsButton.ReadValue<float>() > 0)
+        {
+            MainManager.instance.OpenOptions();
+        }
+
         if (holdAction.ReadValue<float>() > 0)
         {
             if (!holding)
