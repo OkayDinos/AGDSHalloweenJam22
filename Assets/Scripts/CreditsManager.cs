@@ -7,6 +7,6 @@ public class CreditsManager : MonoBehaviour
     public void GoBackButton()
     {
         StaticManager.instance.StaticFor(0.3f);
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        UnityEngine.SceneManagement.SceneManager.LoadScene((int)SceneName.MAINMENU);
     }
 }
