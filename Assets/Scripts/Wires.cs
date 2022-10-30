@@ -124,6 +124,7 @@ public class Wires : MonoBehaviour
             await System.Threading.Tasks.Task.Yield();
         }
 
+        if (FuseBox.instance != null)
         FuseBox.instance.OnMinigameClosed();
     }
 
