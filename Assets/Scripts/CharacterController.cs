@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace OkayDinos.GrimsNightmare
 {
@@ -22,6 +23,8 @@ namespace OkayDinos.GrimsNightmare
         public bool hasKey = false;
         public bool hasFuse = false;
         bool flipped = false;
+
+        [SerializeField] Camera mainCam, cutsceneCam;
 
         Interactables m_CurrenInteractable;
         InputActions m_InputActions = null;
@@ -50,6 +53,48 @@ namespace OkayDinos.GrimsNightmare
             m_InputActions.Disable();
         }
 
+        async void GoToTheForest()
+        {
+            m_InputActions.Disable();
+
+            float time = 4f, timer = 0f;
+
+            cutsceneCam.enabled = true;
+            mainCam.enabled = false;
+
+            
+            cutsceneCam.GetComponent<Animator>().Play("GotoForest");
+
+            while (timer < time)
+            {
+                timer += Time.deltaTime;
+
+                await System.Threading.Tasks.Task.Yield();
+            }
+            
+            StaticManager.instance.Set(true);
+
+            timer = 0f;
+            time = 1.5f;
+
+            while (timer < time)
+            {
+                timer += Time.deltaTime;
+
+                await System.Threading.Tasks.Task.Yield();
+            }
+
+            StaticManager.instance.Set(false);
+
+            cutsceneCam.GetComponent<Animator>().Play("WakeUp");
+
+            //Temporary
+            m_InputActions.Enable();
+
+            cutsceneCam.enabled = false;
+            mainCam.enabled = true;
+        }
+
         void SetSprint(InputAction.CallbackContext ctx)
         {
             sprintPressed = ctx.performed;
@@ -74,21 +119,24 @@ namespace OkayDinos.GrimsNightmare
 
         void OnLook(InputValue a_IV)
         {
+            if (mainCam.enabled)
+            {
+                Vector2 InputVector = a_IV.Get<Vector2>();
 
-            Vector2 InputVector = a_IV.Get<Vector2>();
+                float mouseX = InputVector.x * mouseSensitivity * Time.deltaTime;
+                float mouseY = InputVector.y * mouseSensitivity * Time.deltaTime;
 
-            float mouseX = InputVector.x * mouseSensitivity * Time.deltaTime;
-            float mouseY = InputVector.y * mouseSensitivity * Time.deltaTime;
+                xRotation = Mathf.Clamp(xRotation, -90f, minViewDistance);
 
-            xRotation = Mathf.Clamp(xRotation, -90f, minViewDistance);
-
-            this.transform.Rotate(Vector3.up * mouseX);
+                this.transform.Rotate(Vector3.up * mouseX);
 
 
-            m_CameraXRotation -= mouseY;
-            m_CameraXRotation = Mathf.Clamp(m_CameraXRotation, -90, max);
+                m_CameraXRotation -= mouseY;
+                m_CameraXRotation = Mathf.Clamp(m_CameraXRotation, -90, max);
 
-            Camera.main.transform.eulerAngles = new Vector3(m_CameraXRotation, Camera.main.transform.eulerAngles.y, Camera.main.transform.eulerAngles.z);
+                mainCam.transform.eulerAngles = new Vector3(m_CameraXRotation, Camera.main.transform.eulerAngles.y, Camera.main.transform.eulerAngles.z);
+        
+            }
         }
         private void OnTriggerEnter(Collider other)
         {

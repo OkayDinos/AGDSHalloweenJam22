@@ -32,7 +32,7 @@ public class MainMenu : MonoBehaviour
     public void ButtonStartGame()
     {
         MainManager.instance.currentGameState = GameState.InGame;
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(4);
     }
 
     public void ButtonOpenCredits()
