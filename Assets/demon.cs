@@ -8,6 +8,8 @@ public class demon : MonoBehaviour
     [SerializeField]
     GameObject Player;
 
+    float timer = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +19,15 @@ public class demon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
-        agent.destination = Player.transform.position;
+
+        timer += Time.deltaTime;
+
+        if (timer > 0.05f)
+        {
+
+            NavMeshAgent agent = GetComponent<NavMeshAgent>();
+            agent.destination = Player.transform.position;
+            timer = 0f;
+        }
     }
 }
