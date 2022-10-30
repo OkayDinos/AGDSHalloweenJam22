@@ -14,19 +14,44 @@ namespace OkayDinos.GrimsNightmare
         float m_CameraXRotation = 0f;
         float xRotation = 0f;
         Vector2 m_move;
+        public bool sprintPressed = false;
 
         Rigidbody m_RB;
         float m_Speed = 5f;
+        float m_SprintSpeed = 11f;
         public bool hasKey = false;
         public bool hasFuse = false;
 
         Interactables m_CurrenInteractable;
+        InputActions m_InputActions = null;
 
         // Start is called before the first frame update
         void Start()
         {
             m_RB = this.gameObject.GetComponent<Rigidbody>();
             Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        void OnEnable()
+        {
+            m_InputActions = new InputActions();
+            m_InputActions.Enable();
+
+            m_InputActions.Player.Sprint.performed += SetSprint;
+            m_InputActions.Player.Sprint.canceled += SetSprint;
+        }
+
+        void OnDisable()
+        {
+            m_InputActions.Player.Sprint.performed -= SetSprint;
+            m_InputActions.Player.Sprint.canceled -= SetSprint;
+
+            m_InputActions.Disable();
+        }
+
+        void SetSprint(InputAction.CallbackContext ctx)
+        {
+            sprintPressed = ctx.performed;
         }
 
         // Update is called once per frame
@@ -85,6 +110,8 @@ namespace OkayDinos.GrimsNightmare
             if (direction.sqrMagnitude < 0.01)
                 return;
             var scaledMoveSpeed = m_Speed * Time.deltaTime;
+            if (sprintPressed)
+                scaledMoveSpeed = m_SprintSpeed * Time.deltaTime;
             var move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * new Vector3(direction.x, 0, direction.y);
             transform.position += move * scaledMoveSpeed;
         }
