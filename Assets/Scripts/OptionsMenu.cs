@@ -31,6 +31,7 @@ public class OptionsMenu : MonoBehaviour
             if (MainManager.instance.previousGameState == GameState.InGame)
             {
                 menuButton.SetActive(true);
+                if (Wires.instance != null)
                 Wires.instance.Pause();
             }
             else
@@ -59,12 +60,15 @@ public class OptionsMenu : MonoBehaviour
         MainManager.instance.CloseOptions();
         MainManager.instance.currentGameState = GameState.MainMenu;
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)SceneName.MAINMENU);
+
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void ButtonBack()
     {
         if (MainManager.instance.previousGameState == GameState.InGame)
         {
+            if (Wires.instance != null)
             Wires.instance.Unpause();
         }
         MainManager.instance.CloseOptions();

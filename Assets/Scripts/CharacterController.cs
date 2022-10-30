@@ -10,6 +10,8 @@ namespace OkayDinos.GrimsNightmare
 {
     public class CharacterController : MonoBehaviour
     {
+        public static CharacterController instance;
+
         [SerializeField] float minViewDistance, max;
 
         public float mouseSensitivity = 100f;
@@ -22,7 +24,7 @@ namespace OkayDinos.GrimsNightmare
         public bool sprintPressed = false;
         public bool lookBehind = false;
 
-        float changeSceneTimer = 10f;
+        float changeSceneTimer = 40f;
 
         bool sceneLoading = false;
 
@@ -40,9 +42,23 @@ namespace OkayDinos.GrimsNightmare
         Interactables m_CurrenInteractable;
         InputActions m_InputActions = null;
 
+        public InputAction optionsButton;
+
+        void Awake()
+        {
+            if (CharacterController.instance)
+                Destroy(this);
+            else
+                CharacterController.instance = this;
+
+            optionsButton.Enable();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
+            optionsButton.Enable();
+
             m_RB = this.gameObject.GetComponent<Rigidbody>();
             Cursor.lockState = CursorLockMode.Locked;
             
@@ -231,12 +247,33 @@ namespace OkayDinos.GrimsNightmare
             }
         }
 
+        public void Unpause()
+        {
+            m_InputActions.Enable();
+            controls = true;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
         // Update is called once per frame
         void Update()
         {
+            if (MainManager.instance.currentGameState == GameState.InOptions)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                m_InputActions.Disable();
+                controls = false;
+            }
+
+            if (optionsButton.ReadValue<float>() > 0 && !(MainManager.instance.currentGameState == GameState.InOptions))
+            {
+                Debug.Log("Options");
+                MainManager.instance.OpenOptions();
+            }
+
             if (controls)
             Move(m_move);
 
+            if (controls)
             changeSceneTimer -= Time.deltaTime;
 
             if (changeSceneTimer <= 0)
@@ -257,6 +294,7 @@ namespace OkayDinos.GrimsNightmare
 
         void OnFire()
         {
+            if (controls)
             Debug.Log("FML");
         }
 

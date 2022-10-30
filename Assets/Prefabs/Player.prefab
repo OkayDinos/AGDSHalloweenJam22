@@ -279,7 +279,7 @@ Transform:
   - {fileID: 2795946427466779104}
   - {fileID: 411706196}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1110047153032427393
 MeshFilter:
@@ -480,6 +480,31 @@ MonoBehaviour:
   cutsceneCam: {fileID: 8751323952467445227}
   behindCam: {fileID: 1760141037}
   deadCam: {fileID: 411706198}
+  optionsButton:
+    m_Name: Options Button
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: b430f259-f093-485d-834d-f5b6d05159e2
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: a41974c4-5ac4-4663-aef7-bd9ac9b24f65
+      m_Path: <Keyboard>/p
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Options Button
+      m_Flags: 0
+    - m_Name: 
+      m_Id: cb43875e-26e2-4b88-8c80-3136285242b3
+      m_Path: <Keyboard>/escape
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Options Button
+      m_Flags: 0
+    m_Flags: 0
 --- !u!1 &1110047153169659408
 GameObject:
   m_ObjectHideFlags: 0
