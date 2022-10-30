@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+public enum CurrentCam { MAIN, CUTSCENE, BEHIND }
+
 namespace OkayDinos.GrimsNightmare
 {
     public class CharacterController : MonoBehaviour
@@ -25,21 +27,39 @@ namespace OkayDinos.GrimsNightmare
         public bool hasFuse = false;
         bool flipped = false;
 
-        [SerializeField] Camera mainCam, cutsceneCam;
+        [SerializeField] Camera mainCam, cutsceneCam, behindCam;
 
         Interactables m_CurrenInteractable;
         InputActions m_InputActions = null;
-
-        public Camera cam1;
-        public Camera cam2;
 
         // Start is called before the first frame update
         void Start()
         {
             m_RB = this.gameObject.GetComponent<Rigidbody>();
             Cursor.lockState = CursorLockMode.Locked;
-            cam1.enabled = true;
-            cam2.enabled = false;
+            
+        }
+
+        void SetCam(CurrentCam currentCam)
+        {
+            switch (currentCam)
+            {
+                case CurrentCam.MAIN:
+                    mainCam.enabled = true;
+                    cutsceneCam.enabled = false;
+                    behindCam.enabled = false;
+                    break;
+                case CurrentCam.CUTSCENE:
+                    mainCam.enabled = false;
+                    cutsceneCam.enabled = true;
+                    behindCam.enabled = false;
+                    break;
+                case CurrentCam.BEHIND:
+                    mainCam.enabled = false;
+                    cutsceneCam.enabled = false;
+                    behindCam.enabled = true;
+                    break;
+            }
         }
 
         void OnEnable()
@@ -71,9 +91,7 @@ namespace OkayDinos.GrimsNightmare
 
             float time = 4f, timer = 0f;
 
-            cutsceneCam.enabled = true;
-            mainCam.enabled = false;
-
+            SetCam(CurrentCam.CUTSCENE);
             
             cutsceneCam.GetComponent<Animator>().Play("GotoForest");
 
@@ -117,13 +135,11 @@ namespace OkayDinos.GrimsNightmare
             lookBehind = context.performed;
             if (context.performed)
             {
-                cam1.enabled = false;
-                cam2.enabled = true;
+                SetCam(CurrentCam.BEHIND);
             }
             else
             {
-                cam1.enabled = true;
-                cam2.enabled = false;
+                SetCam(CurrentCam.MAIN);
             }
         }
 
