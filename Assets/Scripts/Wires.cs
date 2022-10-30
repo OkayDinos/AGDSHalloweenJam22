@@ -24,6 +24,8 @@ public class Wires : MonoBehaviour
 
     public AnimationCurve endCurve;
 
+    public AnimationCurve startCurve;
+
     [SerializeField] GameObject winText;
 
     private List<EasyTween> created = new List<EasyTween>();
@@ -53,7 +55,6 @@ public class Wires : MonoBehaviour
         else
             Wires.instance = this;
 
-        holdAction.Enable();
         optionsButton.Enable();
     }
     // Start is called before the first frame update
@@ -69,6 +70,34 @@ public class Wires : MonoBehaviour
         ended = false;
 
         scene = canvas.transform.GetChild(0).gameObject;
+
+        EasyTween tween2 = scene.AddComponent<EasyTween>();
+
+        scene.GetComponent<EasyTween>().rectTransform = scene.GetComponent<RectTransform>();
+
+        created.Add(tween2);
+
+        tween2.SetAnimationPosition(new Vector3(-1800, 0, 20), new Vector3(0, 0, 20), startCurve, startCurve);
+
+        tween2.SetAnimatioDuration(0.7f);
+
+        tween2.OpenCloseObjectAnimation();
+
+        BeginAnim();
+    }
+
+    async void BeginAnim()
+    {
+        float time = 0.7f, timer = 0;
+
+        while (timer < time)
+        {
+            timer += Time.deltaTime;
+
+            await System.Threading.Tasks.Task.Yield();
+        }
+
+        holdAction.Enable();
     }
 
     public void Pause()
@@ -151,6 +180,7 @@ public class Wires : MonoBehaviour
 
                 bool connected = false;
 
+                if (currentWire != null)
                 foreach (GameObject wirePoint in wireEndPoints)
                 {
                     if (Vector3.Distance(mousePos, wirePoint.transform.position) < 60f && wirePoint.GetComponent<Image>().color == currentWirePoint.GetComponent<Image>().color)
@@ -196,14 +226,9 @@ public class Wires : MonoBehaviour
                     tween.OpenCloseObjectAnimation();
 
 
+                    EasyTween tween2 = scene.GetComponent<EasyTween>();
 
-                    EasyTween tween2 = scene.AddComponent<EasyTween>();
-
-                    scene.GetComponent<EasyTween>().rectTransform = scene.GetComponent<RectTransform>();
-
-                    created.Add(tween2);
-
-                    tween2.SetAnimationPosition(new Vector3(0, 0, 20), new Vector3(-1800, 0, 20), endCurve, endCurve);
+                    tween2.SetAnimationPosition(new Vector3(-1800, 0, 20), new Vector3(0, 0, 20), endCurve, endCurve);
 
                     tween2.SetAnimatioDuration(0.7f);
 
