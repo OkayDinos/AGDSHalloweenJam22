@@ -16,6 +16,7 @@ namespace OkayDinos.GrimsNightmare
         float xRotation = 0f;
         Vector2 m_move;
         public bool sprintPressed = false;
+        public bool lookBehind = false;
 
         Rigidbody m_RB;
         float m_Speed = 5f;
@@ -29,11 +30,16 @@ namespace OkayDinos.GrimsNightmare
         Interactables m_CurrenInteractable;
         InputActions m_InputActions = null;
 
+        public Camera cam1;
+        public Camera cam2;
+
         // Start is called before the first frame update
         void Start()
         {
             m_RB = this.gameObject.GetComponent<Rigidbody>();
             Cursor.lockState = CursorLockMode.Locked;
+            cam1.enabled = true;
+            cam2.enabled = false;
         }
 
         void OnEnable()
@@ -43,12 +49,18 @@ namespace OkayDinos.GrimsNightmare
 
             m_InputActions.Player.Sprint.performed += SetSprint;
             m_InputActions.Player.Sprint.canceled += SetSprint;
+
+            m_InputActions.Player.Behind.performed += SetLookBehind;
+            m_InputActions.Player.Behind.canceled += SetLookBehind;
         }
 
         void OnDisable()
         {
             m_InputActions.Player.Sprint.performed -= SetSprint;
             m_InputActions.Player.Sprint.canceled -= SetSprint;
+
+            m_InputActions.Player.Behind.performed -= SetLookBehind;
+            m_InputActions.Player.Behind.canceled -= SetLookBehind;
 
             m_InputActions.Disable();
         }
@@ -100,6 +112,21 @@ namespace OkayDinos.GrimsNightmare
             sprintPressed = ctx.performed;
         }
 
+        void SetLookBehind(InputAction.CallbackContext context)
+        {
+            lookBehind = context.performed;
+            if (context.performed)
+            {
+                cam1.enabled = false;
+                cam2.enabled = true;
+            }
+            else
+            {
+                cam1.enabled = true;
+                cam2.enabled = false;
+            }
+        }
+
         // Update is called once per frame
         void Update()
         {
@@ -142,7 +169,12 @@ namespace OkayDinos.GrimsNightmare
         {
             if(other.CompareTag("Ruben"))
             {
-                GameObject.Destroy(this.gameObject);
+                this.transform.GetChild(1).GetComponent<Animator>().SetTrigger("die");
+                other.GetComponent<Animator>().SetTrigger("dead");
+                other.GetComponent<demon>().playerDead = true;
+                GameObject.Destroy(m_RB);
+                this.GetComponent<CapsuleCollider>().enabled = false;
+                this.GetComponent<CharacterController>().enabled = false;
             }
 
             Debug.Log("Press e to pick up");
