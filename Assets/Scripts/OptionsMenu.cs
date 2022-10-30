@@ -58,7 +58,7 @@ public class OptionsMenu : MonoBehaviour
     {
         MainManager.instance.CloseOptions();
         MainManager.instance.currentGameState = GameState.MainMenu;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        UnityEngine.SceneManagement.SceneManager.LoadScene((int)SceneName.MAINMENU);
     }
 
     public void ButtonBack()

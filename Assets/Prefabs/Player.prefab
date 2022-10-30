@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1760141034}
   - component: {fileID: 1760141037}
   - component: {fileID: 1760141035}
+  - component: {fileID: 7421553307099676691}
   m_Layer: 0
   m_Name: Behind Camera
   m_TagString: MainCamera
@@ -109,6 +110,26 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!95 &7421553307099676691
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760141033}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f56c09c131682984e8f5ee9ea85d49a6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1110047153032427407
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,7 +250,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &1110047153032427405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,6 +497,7 @@ GameObject:
   - component: {fileID: 2795946427466779104}
   - component: {fileID: 8751323952467445227}
   - component: {fileID: 7107046045609371652}
+  - component: {fileID: 211078925080931789}
   m_Layer: 0
   m_Name: Cutscene Camera
   m_TagString: MainCamera
@@ -574,6 +596,26 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!95 &211078925080931789
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2968021833378535151}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f56c09c131682984e8f5ee9ea85d49a6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1674683090
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -32,12 +32,13 @@ public class MainMenu : MonoBehaviour
     public void ButtonStartGame()
     {
         MainManager.instance.currentGameState = GameState.InGame;
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene((int)SceneName.HOUSE);
+        StaticManager.instance.StaticFor(0.3f);
     }
 
     public void ButtonOpenCredits()
     {
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene((int)SceneName.CREDITS);
         StaticManager.instance.StaticFor(0.3f);
     }
 }

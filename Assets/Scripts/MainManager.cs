@@ -4,6 +4,9 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum SceneName { MAINMENU = 0, THEFOREST  = 1, WIRESMINIGAME = 2, CREDITS = 3, TEST = 4, HOUSE = 5, GAMESCENE = 6 }
+
+
 public enum GameState
 {
     MainMenu,

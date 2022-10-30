@@ -20,12 +20,18 @@ namespace OkayDinos.GrimsNightmare
         public bool sprintPressed = false;
         public bool lookBehind = false;
 
+        float changeSceneTimer = 10f;
+
+        bool sceneLoading = false;
+
         Rigidbody m_RB;
         float m_Speed = 5f;
         float m_SprintSpeed = 11f;
         public bool hasKey = false;
         public bool hasFuse = false;
         bool flipped = false;
+
+        public bool HouseScene = false;
 
         [SerializeField] Camera mainCam, cutsceneCam, behindCam;
 
@@ -38,6 +44,50 @@ namespace OkayDinos.GrimsNightmare
             m_RB = this.gameObject.GetComponent<Rigidbody>();
             Cursor.lockState = CursorLockMode.Locked;
             
+            SetCam(CurrentCam.MAIN);
+
+            if (HouseScene)
+            {
+
+
+                WakeUp();
+            }
+            else
+            {
+                BeginForest();
+            }
+        }
+
+        async void WakeUp()
+        {
+            SetCam(CurrentCam.CUTSCENE);
+
+            m_InputActions.Disable();
+
+            float time = 0.5f, timer = 0f;
+
+            while (timer < time)
+            {
+                timer += Time.deltaTime;
+                
+                await System.Threading.Tasks.Task.Yield();
+            }
+
+            cutsceneCam.GetComponent<Animator>().Play("WakeUp");
+
+            time = 1f;
+            timer = 0f;
+
+            while (timer < time)
+            {
+                timer += Time.deltaTime;
+                
+                await System.Threading.Tasks.Task.Yield();
+            }
+
+            m_InputActions.Enable();
+
+            SetCam(CurrentCam.MAIN);
         }
 
         void SetCam(CurrentCam currentCam)
@@ -85,7 +135,32 @@ namespace OkayDinos.GrimsNightmare
             m_InputActions.Disable();
         }
 
-        async void GoToTheForest()
+        public async void BeginForest()
+        {
+            m_InputActions.Disable();
+
+            //StaticManager.instance.Set(false);
+
+            SetCam(CurrentCam.CUTSCENE);
+            
+            cutsceneCam.GetComponent<Animator>().Play("InForestStart");
+
+            float time = 2f, timer = 0f;
+
+            while (timer < time)
+            {
+                timer += Time.deltaTime;
+                await System.Threading.Tasks.Task.Yield();
+            }
+
+            SetCam(CurrentCam.MAIN);
+
+            cutsceneCam.GetComponent<Animator>().Play("WakeUp");
+
+            m_InputActions.Enable();
+        }
+
+        public async void GoToTheForest()
         {
             m_InputActions.Disable();
 
@@ -102,7 +177,7 @@ namespace OkayDinos.GrimsNightmare
                 await System.Threading.Tasks.Task.Yield();
             }
             
-            StaticManager.instance.Set(true);
+            StaticManager.instance.StaticFor(1.6f);
 
             timer = 0f;
             time = 1.5f;
@@ -114,15 +189,10 @@ namespace OkayDinos.GrimsNightmare
                 await System.Threading.Tasks.Task.Yield();
             }
 
-            StaticManager.instance.Set(false);
+            if (cutsceneCam != null)
+            cutsceneCam.GetComponent<Animator>().enabled = false;
 
-            cutsceneCam.GetComponent<Animator>().Play("WakeUp");
-
-            //Temporary
-            m_InputActions.Enable();
-
-            cutsceneCam.enabled = false;
-            mainCam.enabled = true;
+            UnityEngine.SceneManagement.SceneManager.LoadScene((int)SceneName.THEFOREST);
         }
 
         void SetSprint(InputAction.CallbackContext ctx)
@@ -147,6 +217,17 @@ namespace OkayDinos.GrimsNightmare
         void Update()
         {
             Move(m_move);
+
+            changeSceneTimer -= Time.deltaTime;
+
+            if (changeSceneTimer <= 0)
+            {
+                if (HouseScene && !sceneLoading)
+                {
+                    sceneLoading = true;
+                    GoToTheForest();
+                }
+            }
         }
 
         void OnMove(InputValue context)
@@ -185,7 +266,7 @@ namespace OkayDinos.GrimsNightmare
         {
             if(other.CompareTag("Ruben"))
             {
-                this.transform.GetChild(1).GetComponent<Animator>().SetTrigger("die");
+                this.transform.GetChild(0).GetComponent<Animator>().SetTrigger("die");
                 other.GetComponent<Animator>().SetTrigger("dead");
                 other.GetComponent<demon>().playerDead = true;
                 GameObject.Destroy(m_RB);

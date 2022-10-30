@@ -25,6 +25,7 @@ public class StaticManager : MonoBehaviour
     // Update is called once per frame
     public void Set(bool state)
     {
+        if (staticImage != null)
         staticImage.enabled = state;
     }
 
