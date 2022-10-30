@@ -9,6 +9,8 @@ public class demon : MonoBehaviour
     GameObject Player;
 
     float timer = 0f;
+
+    bool delay = true;
     public bool playerDead = false;
     NavMeshAgent agent;
 
@@ -16,25 +18,41 @@ public class demon : MonoBehaviour
     void Start()
     {
          agent = GetComponent<NavMeshAgent>();
+
+         SpawnDelay();
+    }
+
+    async void SpawnDelay()
+    {
+        float time = 3f, timer = 0f;
+        while (timer < time)
+        {
+            timer += Time.deltaTime;
+            await System.Threading.Tasks.Task.Yield();
+        }
+        delay = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!playerDead)
+        if (!delay)
         {
-            timer += Time.deltaTime;
-
-            if (timer > 0.05f)
+            if (!playerDead)
             {
-                
-                agent.destination = Player.transform.position;
-                timer = 0f;
+                timer += Time.deltaTime;
+
+                if (timer > 0.05f)
+                {
+                    
+                    agent.destination = Player.transform.position;
+                    timer = 0f;
+                }
             }
-        }
-        else
-        {
-            agent.ResetPath();
+            else
+            {
+                agent.ResetPath();
+            }
         }
     }
 }

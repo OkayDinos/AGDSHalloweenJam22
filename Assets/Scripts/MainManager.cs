@@ -45,7 +45,7 @@ public class MainManager : MonoBehaviour
         previousGameState = GameState.MainMenu;
     }
 
-    void Start ()
+    void Start()
     {
         if (File.Exists(Application.persistentDataPath + "/OptionsData.json"))
         {
@@ -82,6 +82,12 @@ public class MainManager : MonoBehaviour
     {
         SaveData();
         currentGameState = previousGameState;
+
+        if (OkayDinos.GrimsNightmare.CharacterController.instance != null)
+        {
+            OkayDinos.GrimsNightmare.CharacterController.instance.Unpause();
+        }
+
         optionsMenuRef.gameObject.SetActive(false);
     }
 
