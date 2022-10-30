@@ -33,7 +33,7 @@ namespace OkayDinos.GrimsNightmare
 
         public bool HouseScene = false;
 
-        [SerializeField] Camera mainCam, cutsceneCam, behindCam;
+        [SerializeField] Camera mainCam, cutsceneCam, behindCam, deadCam;
 
         Interactables m_CurrenInteractable;
         InputActions m_InputActions = null;
