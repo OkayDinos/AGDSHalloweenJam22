@@ -29,6 +29,17 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void ButtonSus()
+    {
+        MainManager.instance.currentGameState = GameState.InGame;
+        SceneManager.LoadScene((int)SceneName.WIRESMINIGAME);
+    }
+
+    public void FunnySoundButton()
+    {
+
+    }
+
     public void ButtonStartGame()
     {
         MainManager.instance.currentGameState = GameState.InGame;

@@ -14,6 +14,8 @@ namespace OkayDinos.GrimsNightmare
 
         public float mouseSensitivity = 100f;
 
+        bool controls = true;
+
         float m_CameraXRotation = 0f;
         float xRotation = 0f;
         Vector2 m_move;
@@ -63,6 +65,7 @@ namespace OkayDinos.GrimsNightmare
             SetCam(CurrentCam.CUTSCENE);
 
             m_InputActions.Disable();
+            controls = false;
 
             float time = 0.5f, timer = 0f;
 
@@ -86,6 +89,7 @@ namespace OkayDinos.GrimsNightmare
             }
 
             m_InputActions.Enable();
+            controls = true;
 
             SetCam(CurrentCam.MAIN);
         }
@@ -147,6 +151,7 @@ namespace OkayDinos.GrimsNightmare
         public async void BeginForest()
         {
             m_InputActions.Disable();
+            controls = false;
 
             //StaticManager.instance.Set(false);
 
@@ -167,11 +172,13 @@ namespace OkayDinos.GrimsNightmare
             cutsceneCam.GetComponent<Animator>().Play("WakeUp");
 
             m_InputActions.Enable();
+            controls = true;
         }
 
         public async void GoToTheForest()
         {
             m_InputActions.Disable();
+            controls = false;
 
             float time = 4f, timer = 0f;
 
@@ -201,6 +208,8 @@ namespace OkayDinos.GrimsNightmare
             if (cutsceneCam != null)
             cutsceneCam.GetComponent<Animator>().enabled = false;
 
+            SoundManager.instance.PlayFootstepsSound();
+
             UnityEngine.SceneManagement.SceneManager.LoadScene((int)SceneName.THEFOREST);
         }
 
@@ -225,6 +234,7 @@ namespace OkayDinos.GrimsNightmare
         // Update is called once per frame
         void Update()
         {
+            if (controls)
             Move(m_move);
 
             changeSceneTimer -= Time.deltaTime;
@@ -252,7 +262,7 @@ namespace OkayDinos.GrimsNightmare
 
         void OnLook(InputValue a_IV)
         {
-            if (mainCam.enabled)
+            if (mainCam.enabled && controls)
             {
                 Vector2 InputVector = a_IV.Get<Vector2>();
 
@@ -324,7 +334,7 @@ namespace OkayDinos.GrimsNightmare
 
         void OnInteract()
         {
-            if(m_CurrenInteractable)
+            if(m_CurrenInteractable && controls)
             {
                 m_CurrenInteractable.SendMessage("DoInteract");
             }
