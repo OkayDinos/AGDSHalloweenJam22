@@ -101,7 +101,6 @@ namespace OkayDinos.GrimsNightmare
 
         void OnLook(InputValue a_IV)
         {
-
             Vector2 InputVector = a_IV.Get<Vector2>();
 
             float mouseX = InputVector.x * mouseSensitivity * Time.deltaTime;
@@ -121,7 +120,12 @@ namespace OkayDinos.GrimsNightmare
         {
             if(other.CompareTag("Ruben"))
             {
-                GameObject.Destroy(this.gameObject);
+                this.transform.GetChild(1).GetComponent<Animator>().SetTrigger("die");
+                other.GetComponent<Animator>().SetTrigger("dead");
+                other.GetComponent<demon>().playerDead = true;
+                GameObject.Destroy(m_RB);
+                this.GetComponent<CapsuleCollider>().enabled = false;
+                this.GetComponent<CharacterController>().enabled = false;
             }
 
             Debug.Log("Press e to pick up");
