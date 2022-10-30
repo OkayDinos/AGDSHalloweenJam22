@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        MainManager.instance.CloseOptions();
     }
 
     // Update is called once per frame
@@ -38,5 +38,6 @@ public class MainMenu : MonoBehaviour
     public void ButtonOpenCredits()
     {
         SceneManager.LoadScene(3);
+        StaticManager.instance.StaticFor(0.3f);
     }
 }

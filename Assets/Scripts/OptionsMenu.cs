@@ -14,7 +14,10 @@ public class OptionsMenu : MonoBehaviour
     void Awake()
     {
         if (OptionsMenu.instance)
+        {
             Destroy(this);
+            Destroy(gameObject);
+        }
         else
             OptionsMenu.instance = this;
 

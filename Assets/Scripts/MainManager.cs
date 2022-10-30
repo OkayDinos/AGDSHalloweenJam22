@@ -29,7 +29,10 @@ public class MainManager : MonoBehaviour
     void Awake()
     {
         if (MainManager.instance)
+        {
             Destroy(this);
+            Destroy(gameObject);
+        }
         else
             MainManager.instance = this;
 

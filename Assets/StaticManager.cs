@@ -12,7 +12,10 @@ public class StaticManager : MonoBehaviour
     void Awake()
     {
         if (StaticManager.instance)
+        {
             Destroy(this);
+            Destroy(gameObject);
+        }
         else
             StaticManager.instance = this;
 
@@ -23,5 +26,20 @@ public class StaticManager : MonoBehaviour
     public void Set(bool state)
     {
         staticImage.enabled = state;
+    }
+
+    public async void StaticFor(float time)
+    {
+        float timer = 0f;
+
+        Set(true);
+
+        while (timer < time)
+        {
+            timer += Time.deltaTime;
+            await System.Threading.Tasks.Task.Yield();
+        }
+
+        Set(false);
     }
 }
