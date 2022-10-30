@@ -16,9 +16,12 @@ namespace OkayDinos.GrimsNightmare
         Vector2 m_move;
 
         Rigidbody m_RB;
-        float m_Speed = 11f;
-
+        float m_Speed = 5f;
+        bool hasKey = false;
+        bool hasFuse = false;
         bool flipped = false;
+
+        Interactables m_CurrenInteractable;
 
         // Start is called before the first frame update
         void Start()
@@ -70,6 +73,18 @@ namespace OkayDinos.GrimsNightmare
             }
 
             Debug.Log("Press e to pick up");
+            if(other.gameObject.layer == 7)
+            {
+                m_CurrenInteractable = other.gameObject.GetComponent<Interactables>();
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if(m_CurrenInteractable == other.gameObject.GetComponent<Interactables>())
+            {
+                m_CurrenInteractable = null;
+            }
         }
 
         void Move(Vector2 direction)
@@ -81,5 +96,31 @@ namespace OkayDinos.GrimsNightmare
             transform.position += move * scaledMoveSpeed;
         }
 
+        void OnInteract()
+        {
+            if(m_CurrenInteractable)
+            {
+                m_CurrenInteractable.SendMessage("DoInteract");
+            }
+        }
+
+        void PickUp(interactableType a_Current)
+        {
+
+            switch (a_Current)
+            {
+                case interactableType.key:
+                    hasKey = true;
+                    Debug.Log(hasKey);
+                    break;
+                case interactableType.fuse:
+                    hasFuse = true;
+                    Debug.Log(hasFuse);
+                    break;
+                default:
+                    break;
+            }
+
+        }
     }
 }
