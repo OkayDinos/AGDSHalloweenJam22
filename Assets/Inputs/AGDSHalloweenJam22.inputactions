@@ -33,22 +33,22 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interact",
+                    "name": "LookBehind",
                     "type": "Button",
-                    "id": "ff9400ff-046a-4ea4-abf7-3e45c3aabb25",
+                    "id": "404e0849-e6b8-4a2f-a4fc-e3606630894d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
+                }
                 {
-                    "name": "Sprint",
-                    "type": "Value",
-                    "id": "bea0ff6b-392e-42ab-82fc-f70dee877f56",
-                    "expectedControlType": "",
+                                    "name": "Interact",
+                    "type": "Button",
+                    "id": "ff9400ff-046a-4ea4-abf7-3e45c3aabb25",
+                                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -274,45 +274,22 @@
                 },
                 {
                     "name": "",
+                    "id": "32a7af74-d6c3-4093-b778-b0192330489a",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "LookBehind",
+                                        "isComposite": false,
+                    "isPartOfComposite": false},
+                    {
+                        "name": "",
                     "id": "5b673424-811f-401d-af1b-0da6537b0a65",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a4036268-dc1b-45d7-9b25-8b08d0811e27",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2de73f99-e54d-4104-a075-09d98975e547",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Sprint",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "862819c7-5053-42cb-8a43-b74b1b05dbe9",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
