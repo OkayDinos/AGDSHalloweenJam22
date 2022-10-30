@@ -33,9 +33,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interact",
+                    "name": "LookBehind",
                     "type": "Button",
-                    "id": "ff9400ff-046a-4ea4-abf7-3e45c3aabb25",
+                    "id": "404e0849-e6b8-4a2f-a4fc-e3606630894d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                }
+                {
+                                    "name": "Interact",
+                    "type": "Button",
+                    "id": "ff9400ff-046a-4ea4-abf7-3e45c3aabb25",
+                                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -274,6 +283,16 @@
                 },
                 {
                     "name": "",
+                    "id": "32a7af74-d6c3-4093-b778-b0192330489a",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "LookBehind",
+                                        "isComposite": false,
+                    "isPartOfComposite": false},
+                    {
+                        "name": "",
                     "id": "5b673424-811f-401d-af1b-0da6537b0a65",
                     "path": "<Keyboard>/e",
                     "interactions": "",

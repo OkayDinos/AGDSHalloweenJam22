@@ -21,6 +21,7 @@ namespace OkayDinos.GrimsNightmare
         float m_SprintSpeed = 11f;
         public bool hasKey = false;
         public bool hasFuse = false;
+        bool flipped = false;
 
         Interactables m_CurrenInteractable;
         InputActions m_InputActions = null;
@@ -91,6 +92,12 @@ namespace OkayDinos.GrimsNightmare
         }
         private void OnTriggerEnter(Collider other)
         {
+            if(other.CompareTag("Ruben"))
+            {
+                GameObject.Destroy(this.gameObject);
+            }
+
+            Debug.Log("Press e to pick up");
             if(other.gameObject.layer == 7)
             {
                 m_CurrenInteractable = other.gameObject.GetComponent<Interactables>();
