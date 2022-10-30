@@ -10,11 +10,12 @@ public class demon : MonoBehaviour
 
     float timer = 0f;
     public bool playerDead = false;
+    NavMeshAgent agent;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+         agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -26,10 +27,14 @@ public class demon : MonoBehaviour
 
             if (timer > 0.05f)
             {
-                NavMeshAgent agent = GetComponent<NavMeshAgent>();
+                
                 agent.destination = Player.transform.position;
                 timer = 0f;
             }
+        }
+        else
+        {
+            agent.ResetPath();
         }
     }
 }

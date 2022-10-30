@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public enum CurrentCam { MAIN, CUTSCENE, BEHIND }
+public enum CurrentCam { MAIN, CUTSCENE, BEHIND, DEAD }
 
 namespace OkayDinos.GrimsNightmare
 {
@@ -98,16 +98,25 @@ namespace OkayDinos.GrimsNightmare
                     mainCam.enabled = true;
                     cutsceneCam.enabled = false;
                     behindCam.enabled = false;
+                    deadCam.enabled = false;    
                     break;
                 case CurrentCam.CUTSCENE:
                     mainCam.enabled = false;
                     cutsceneCam.enabled = true;
                     behindCam.enabled = false;
+                    deadCam.enabled = false;
                     break;
                 case CurrentCam.BEHIND:
                     mainCam.enabled = false;
                     cutsceneCam.enabled = false;
                     behindCam.enabled = true;
+                    deadCam.enabled = false;
+                    break;
+                case CurrentCam.DEAD:
+                    mainCam.enabled= false;
+                    cutsceneCam.enabled = false;
+                    behindCam.enabled = false;
+                    deadCam.enabled = true;
                     break;
             }
         }
@@ -269,9 +278,22 @@ namespace OkayDinos.GrimsNightmare
                 this.transform.GetChild(0).GetComponent<Animator>().SetTrigger("die");
                 other.GetComponent<Animator>().SetTrigger("dead");
                 other.GetComponent<demon>().playerDead = true;
-                GameObject.Destroy(m_RB);
-                this.GetComponent<CapsuleCollider>().enabled = false;
+
+                CapsuleCollider[] capsules = other.GetComponents<CapsuleCollider>();
+                foreach(CapsuleCollider c in capsules)
+                {
+                    c.enabled = false;
+                }
+
+                other.transform.position = this.transform.position + this.transform.forward * 0.7f;
+                other.transform.LookAt(this.transform.position);
+                other.transform.Rotate(0, -200, 0);
+
+                GameObject.Find("Canvas").transform.GetChild(0).gameObject.SetActive(true);
+
+                SetCam(CurrentCam.DEAD);
                 this.GetComponent<CharacterController>().enabled = false;
+                Debug.Log("Game over");
             }
 
             Debug.Log("Press e to pick up");
