@@ -28,6 +28,8 @@ namespace OkayDinos.GrimsNightmare
 
         bool sceneLoading = false;
 
+        bool win = false;
+
         Rigidbody m_RB;
         float m_Speed = 5f;
         float m_SprintSpeed = 11f;
@@ -247,6 +249,11 @@ namespace OkayDinos.GrimsNightmare
             }
         }
 
+        public void YouWin()
+        {
+            win = true;
+        }
+
         public void Unpause()
         {
             m_InputActions.Enable();
@@ -273,7 +280,7 @@ namespace OkayDinos.GrimsNightmare
             if (controls)
             Move(m_move);
 
-            if (controls)
+            if (controls && !win)
             changeSceneTimer -= Time.deltaTime;
 
             if (changeSceneTimer <= 0)

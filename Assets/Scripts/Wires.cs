@@ -126,6 +126,9 @@ public class Wires : MonoBehaviour
 
         if (FuseBox.instance != null)
         FuseBox.instance.OnMinigameClosed();
+
+        if (OkayDinos.GrimsNightmare.CharacterController.instance != null)
+        OkayDinos.GrimsNightmare.CharacterController.instance.YouWin();
     }
 
     // Update is called once per frame
